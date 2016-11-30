@@ -1,27 +1,53 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const ejs = require('ejs-locals');
+const routes = require('./routes/index');
+const users = require('./routes/users');
+const movie = require('./routes/movie');
+const session = require('express-session');
+const SessionStore = require('connect-mongo')(session);
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+// const store = new SessionStore({
+//     url: "mongodb://localhost/session",
+//     interval: 120000 // expiration check worker run interval in millisec (default: 60000)
+// });
 
-var app = express();
+const app = express();
 
+require('./routes/log')();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.engine('.html', ejs);
+app.set('view engine', 'html');
+
+app.get('/movie/add', movie.movieAdd);//增加
+app.post('/movie/add', movie.doMovieAdd);//提交
+app.get('/movie/:name', movie.movieAdd);//编辑查询
+app.get('/movie/json/:name', movie.movieJSON);//JSON数据
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(session({
+  secret: 'achen',
+  store: new SessionStore({
+    url : "mongodb://localhost/a"
+  }),
+  cookie: { maxAge: 1000 * 60 * 60}
+}));
+// 定义日志和输出级别
 app.use(logger('dev'));
+// 定义数据解析器
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+// 定义cookie解析器
 app.use(cookieParser());
+// 定义静态文件目录
 app.use(express.static(path.join(__dirname, 'public')));
-
+// 匹配路径和路由
 app.use('/', routes);
 app.use('/users', users);
 
