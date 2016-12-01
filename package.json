@@ -17,12 +17,21 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-preset-es2015": "^6.18.0",
+    "config-lite": "^1.5.0",
+    "connect-flash": "^0.1.1",
     "connect-mongo": "^1.3.2",
     "ejs": "^2.5.3",
     "ejs-locals": "^1.0.2",
+    "express-formidable": "^1.0.0",
     "express-session": "^1.14.2",
+    "express-winston": "^2.0.0",
     "log4js": "^1.0.1",
+    "moment": "^2.17.0",
+    "mongolass": "^2.3.2",
     "mongoose": "^4.7.0",
-    "session-mongoose": "^0.5.2"
+    "objectid-to-timestamp": "^1.3.0",
+    "session-mongoose": "^0.5.2",
+    "sha1": "^1.1.1",
+    "winston": "^2.3.0"
   }
 }
