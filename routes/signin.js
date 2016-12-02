@@ -19,7 +19,7 @@ router.post('/', checkNotLogin, function(req, res, next) {
     .then(function (user) {
       if (!user) {
         req.flash('error', '用户不存在');
-        return res.redirect('back');
+        return res.redirect('back');    // 返回上一页
       }
       // 检查密码是否匹配
       if (sha1(password) !== user.password) {

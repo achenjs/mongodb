@@ -3,11 +3,20 @@ module.exports = function (app) {
     res.redirect('/posts');
   });
 
-  app.use('/signup', require('./signup'));
+  app.use('/signup', require('./signup'));   // 注册逻辑
 
-  app.use('/signin', require('./signin'));
+  app.use('/signin', require('./signin'));    // 登录逻辑
 
-  app.use('/signout', require('./signout'));
+  app.use('/signout', require('./signout'));  // 退出逻辑
 
-  app.use('/posts', require('./posts'));
+  app.use('/posts', require('./posts'));  // 主页逻辑
+
+
+  // 404 page
+  app.use(function (req, res) {
+    if (!res.headersSent) {
+      res.render('404');
+    }
+  });
+
 };

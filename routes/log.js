@@ -21,4 +21,4 @@ module.exports = function(){
   });
   var logger = log4js.getLogger();
   logger.setLevel('INFO');
-}
+};
