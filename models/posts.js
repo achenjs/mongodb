@@ -1,7 +1,9 @@
 var marked = require('marked');
 var Post = require('../lib/mongo').Post;
-
+var Logs = require('../lib/mongo').Logs;
 var CommentModel = require('./comments');
+
+
 
 // 给 post 添加留言数 commentsCount
 Post.plugin('addCommentsCount', {

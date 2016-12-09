@@ -8,7 +8,7 @@ var routes = require('./routes');
 var pkg = require('./package');
 var winston = require('winston');
 var expressWinston = require('express-winston');
-
+var userMysql = require('./lib/userMysql');
 var app = express();
 
 // 设置模板目录
@@ -20,15 +20,19 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 // session 中间件
 app.use(session({
-  name: config.session.key,// 设置 cookie 中保存 session id 的字段名称
-  secret: config.session.secret,// 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改
+  name: config.session.key,             // 设置 cookie 中保存 session id 的字段名称
+  secret: config.session.secret,        // 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改
   cookie: {
-    maxAge: config.session.maxAge// 过期时间，过期后 cookie 中的 session id 自动删除
+    maxAge: config.session.maxAge       // 过期时间，过期后 cookie 中的 session id 自动删除
   },
-  store: new MongoStore({// 将 session 存储到 mongodb
-    url: config.mongodb// mongodb 地址
+    store: new MongoStore({             // 将 session 存储到 mongodb
+    url: config.mongodb                 // mongodb 地址
   })
 }));
+
+//连接Mysql
+userMysql(app);
+
 // flash 中间价，用来显示通知
 app.use(flash());
 // 处理表单及文件上传的中间件

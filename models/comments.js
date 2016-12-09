@@ -1,6 +1,6 @@
 var marked = require('marked');
 var Comment = require('../lib/mongo').Comment;
-
+var Logs = require('../lib/mongo').Logs;
 // 将 comment 的 content 从 markdown 转换成 html
 Comment.plugin('contentToHtml', {
     afterFind: function (comments) {

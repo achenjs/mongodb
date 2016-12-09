@@ -16,9 +16,38 @@
         <label>重复密码</label>
         <input placeholder="重复密码" type="password" name="repassword">
       </div>
-      <input type="submit" class="ui button fluid" value="注册">
-    </div>
+      <div class="field required">
+        <label>用户类型</label>
+        <div class="inline fields">
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" name="role" checked="" tabindex="0" value="1" class="hidden">
+              <label>管理员</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" name="role" tabindex="0" value="2" class="hidden">
+              <label>经理</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" name="role" tabindex="0" value="3" class="hidden">
+              <label>组长</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" name="role" tabindex="0" value="4" class="hidden">
+              <label>教师</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    <input type="submit" class="ui button fluid" value="注册">
+  </div>
   </form>
 </div>
-
+<script src="/javascripts/signup.js"></script>
 <%- include('footer') %>

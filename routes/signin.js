@@ -1,9 +1,9 @@
 var sha1 = require('sha1');
 var express = require('express');
 var router = express.Router();
-
 var UserModel = require('../models/users');
 var checkNotLogin = require('../middlewares/check').checkNotLogin;
+var Logs = require('../lib/mongo').Logs;
 
 // GET /signin 登录页
 router.get('/', checkNotLogin, function(req, res, next) {
@@ -12,9 +12,15 @@ router.get('/', checkNotLogin, function(req, res, next) {
 
 // POST /signin 用户登录
 router.post('/', checkNotLogin, function(req, res, next) {
-  var name = req.fields.name;
-  var password = req.fields.password;
-
+    var name = req.fields.name;
+    var password = req.fields.password;
+    var sessionId = req.session.id;
+    var logs = {
+        name: name,
+        nameId: sessionId,
+        operationType: "登录",
+        time: new Date().toLocaleString()
+    };
   UserModel.getUserByName(name)
     .then(function (user) {
       if (!user) {
@@ -30,9 +36,11 @@ router.post('/', checkNotLogin, function(req, res, next) {
       // 用户信息写入 session
       delete user.password;
       req.session.user = user;
+
       // 跳转到主页
       res.redirect('/posts');
-    })
+    });
+    UserModel.createLog(logs)
     .catch(next);
 });
 
